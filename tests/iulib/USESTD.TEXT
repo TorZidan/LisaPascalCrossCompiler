@@ -1,0 +1,10 @@
+PROGRAM UsesStd;
+  USES StdUnit, HWInt;
+  VAR s: SUStr; t: Milliseconds;
+  BEGIN
+    SUInit;
+    t := Timer;
+    s := 'hello';
+    SUUpStr(@s);
+    WriteLn(s);
+  END.

@@ -1,0 +1,178 @@
+PROGRAM Boxes;
+
+{Sample program illustrating use of the Graf3D unit by drawing random 3D boxes
+ on a grid.                                                                    }
+
+USES
+{$U-}
+     {$U QD/QuickDraw.OBJ }  QuickDraw,
+     {$U QD/Graf3D.OBJ    }  Graf3D,
+     {$U QD/QDSupport.OBJ }  QDSupport;
+{$U+}
+
+CONST boxCount  = 15;
+
+TYPE Box3D=RECORD
+            pt1:  Point3D;
+            pt2:  Point3D;
+            dist: REAL;
+           END;
+
+VAR
+   heapBuf:    ARRAY[0..8192] OF INTEGER;      {16k bytes}
+   GPort1:     GrafPort;
+   GPort2:     Port3d;
+   myPort:     GrafPtr;
+   myPort3D:   Port3DPtr;
+   boxArray:   ARRAY[0..boxCount] OF Box3D;
+   nBoxes:     INTEGER;
+   i:          INTEGER;
+
+
+FUNCTION HeapError(hz: QDPtr; bytesNeeded: INTEGER): INTEGER;
+{ this procedure gets called when the heap zone is full }
+BEGIN
+  WRITELN('The heap is full.  The program must now terminate! ');
+  Halt;
+END;
+
+
+FUNCTION Distance(pt1,pt2: POINT3D): REAL;
+VAR dx,dy,dz: REAL;
+BEGIN
+  dx:=pt2.X - pt1.X;
+  dy:=pt2.Y - pt1.Y;
+  dz:=pt2.Z - pt1.Z;
+  Distance:=SQRT(dx*dx + dy*dy + dz*dz);
+END;
+
+
+PROCEDURE MakeBox;
+
+VAR myBox:      Box3D;
+    i,j,h,v:    INTEGER;
+    p1,p2:      Point3D;
+    myRect:     Rect;
+    testRect:   Rect;
+
+BEGIN
+  p1.x:=Random mod 70-15;
+  p1.y:=Random mod 70 -10;
+  p1.z:=0.0;
+  p2.x:=p1.x + 10 + ABS(Random) MOD 30;
+  p2.y:=p1.y + 10 + ABS(Random) MOD 45;
+  p2.z:=p1.z + 10 + ABS(Random) MOD 35;
+
+  { reject box if it intersects one already in list }
+  SetRect(myRect,ROUND(p1.x),ROUND(p1.y),ROUND(p2.x),ROUND(p2.y));
+  FOR i:=0 TO nBoxes-1 DO
+    BEGIN
+      WITH boxArray[i] DO
+        SetRect(testRect,ROUND(pt1.x),ROUND(pt1.y),
+                        ROUND(pt2.x),ROUND(pt2.y));
+      IF SectRect(myRect,testRect,testRect) THEN EXIT(MakeBox);
+    END;
+
+  myBox.pt1:=p1;
+  myBox.pt2:=p2;
+
+  { calc midpoint of box and its distance from the eye }
+  p1.x:=(p1.x + p2.x)/2.0;
+  p1.y:=(p1.y + p2.y)/2.0;
+  p1.z:=(p1.z + p2.z)/2.0;
+  Transform(p1,p2);
+  myBox.dist:=Distance(p2,myPort3D^.eye);  { distance to eye }
+
+  i:=0;
+  boxArray[nBoxes].dist:=myBox.dist; { sentinel }
+  WHILE myBox.dist > boxArray[i].dist DO i:=i+1; { insert in order of dist }
+  FOR j:=nBoxes DOWNTO i+1 DO boxArray[j]:=boxArray[j-1];
+  boxArray[i]:=myBox;
+  nBoxes:=nBoxes+1;
+END;
+
+
+PROCEDURE DrawBox(pt1,pt2: Point3D);
+{ draws a 3D box with shaded faces. }
+{ only shades correctly in one direction }
+VAR tempRgn: RgnHandle;
+BEGIN
+  tempRgn:=NewRgn;
+  OpenRgn;
+    MoveTo3D(pt1.x,pt1.y,pt1.z); { front face, y=y1 }
+    LineTo3D(pt1.x,pt1.y,pt2.z);
+    LineTo3D(pt2.x,pt1.y,pt2.z);
+    LineTo3D(pt2.x,pt1.y,pt1.z);
+    LineTo3D(pt1.x,pt1.y,pt1.z);
+  CloseRgn(tempRgn);
+  FillRgn(tempRgn,white);
+
+  OpenRgn;
+    MoveTo3D(pt1.x,pt1.y,pt2.z); { top face, z=z2 }
+    LineTo3D(pt1.x,pt2.y,pt2.z);
+    LineTo3D(pt2.x,pt2.y,pt2.z);
+    LineTo3D(pt2.x,pt1.y,pt2.z);
+    LineTo3D(pt1.x,pt1.y,pt2.z);
+  CloseRgn(tempRgn);
+  FillRgn(tempRgn,gray);
+
+  OpenRgn;
+  MoveTo3D(pt2.x,pt1.y,pt1.z); { right face, x=x2 }
+    LineTo3D(pt2.x,pt1.y,pt2.z);
+    LineTo3D(pt2.x,pt2.y,pt2.z);
+    LineTo3D(pt2.x,pt2.y,pt1.z);
+    LineTo3D(pt2.x,pt1.y,pt1.z);
+  CloseRgn(tempRgn);
+  FillRgn(tempRgn,black);
+
+  PenPat(white);
+  MoveTo3D(pt2.x,pt2.y,pt2.z);  { outline right }
+  LineTo3D(pt2.x,pt2.y,pt1.z);
+  LineTo3D(pt2.x,pt1.y,pt1.z);
+  PenNormal;
+
+  DisposeRgn(tempRgn);
+END;
+
+
+BEGIN  { main program }
+  {----- Initialization - Generic to all applications using QuickDraw -----}
+  QDInit(@heapBuf, @heapBuf[8192], @heapError); { Must do this once at beginning }
+
+  myPort := @GPort1;
+  OpenPort(myPort);
+  myPort3D := @GPort2;
+  Open3DPort(myPort3D);
+
+  ViewPort(myPort^.portRect);     { put the image in this rect   }
+  LookAt(-100,75,100,-75);        { aim the camera into 3D sapce }
+  ViewAngle(30);                  { choose lens focal length     }
+  Identity; Roll(20); Pitch(70);  { roll and pitch the plane     }
+
+  PenPat(white);
+  BackPat(black);
+  EraseRect(myPort^.portRect);
+
+  FOR i:=-10 TO 10 DO
+    BEGIN
+      MoveTo3D(i*10,-100,0);
+      LineTo3D(i*10,+100,0);
+    END;
+
+  FOR i:=-10 TO 10 DO
+    BEGIN
+      MoveTo3D(-100,i*10,0);
+      LineTo3D(+100,i*10,0);
+    END;
+
+  nBoxes:=0;
+  REPEAT MakeBox; UNTIL nBoxes=boxCount;
+  FOR i:=nBoxes-1 DOWNTO 0 DO
+    DrawBox(boxArray[i].pt1,boxArray[i].pt2);
+
+  Tone(2000, 500);  { Beep tone of (1/2000)*10^6 == 500 cycles/sec for
+                      500 milliseconds }
+  ReadLn;  { Wait until RETURN entered before terminating program }
+
+
+END.

@@ -1,0 +1,60 @@
+{ SPDX-License-Identifier: GPL-3.0-or-later }
+{ Packed arrays, packed/variant records, sets, strings, pointers, and WITH. }
+program TTypes;
+
+type
+  ByteGrid = packed array[0..7] of 0..255;
+  BitFlags = packed record
+    fReady: Boolean;
+    fDone: Boolean;
+    fLevel: 0..7;
+    fSlot: 0..31;
+  end;
+  TagKind = (tkLong, tkWords);
+  VarBox = record
+    boxId: Integer;
+    case kind: TagKind of
+      tkLong:  (fullVal: LongInt);
+      tkWords: (hiWord, loWord: Integer);
+  end;
+  BoxPtr = ^VarBox;
+  DigitSet = set of 0..15;
+  ShortTxt = String[40];
+
+var
+  gGrid: ByteGrid;
+  gFlags: BitFlags;
+  gBox: VarBox;
+  gPtr: BoxPtr;
+  gSetA, gSetB, gSetC: DigitSet;
+  gText: ShortTxt;
+  gPos: Integer;
+
+begin
+  gGrid[0] := 0;
+  gGrid[7] := 127;
+  gFlags.fReady := True;
+  gFlags.fDone := False;
+  gFlags.fLevel := 5;
+  gFlags.fSlot := 19;
+
+  gBox.boxId := 3;
+  gBox.kind := tkWords;
+  gBox.hiWord := 12;
+  gBox.loWord := 34;
+  gPtr := @gBox;
+  with gPtr^ do
+    if gFlags.fReady then
+      boxId := boxId + loWord;
+
+  gSetA := [1, 3, 5..9];
+  gSetB := [2, 6..11];
+  gSetC := (gSetA + gSetB) - (gSetA * gSetB);
+  if (7 in gSetC) and ([1, 3] <= gSetA) then
+    gGrid[1] := 64;
+
+  gText := Concat('Lisa', '-', 'Pascal');
+  Delete(gText, 5, 1);
+  Insert('/', gText, 5);
+  gPos := Pos('/', Copy(gText, 1, Length(gText)));
+end.

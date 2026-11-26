@@ -1,0 +1,12 @@
+base_tests/T_ARITH 5c9a4cf9321f82fab93f9f9971505762  Compilation complete - no errors found.  33 lines.
+base_tests/T_CTRL  80968384753da910d3b68c81f731aad5  Compilation complete - no errors found.  49 lines.
+base_tests/T_TYPES a0faef651476b482495d2aae30e6360c  Compilation complete - no errors found.  60 lines.
+base_tests/T_PROCS cb87935a40c0ed97d3d6ae631d45267c  Compilation complete - no errors found.  68 lines.
+base_tests/T_INLINE a2468c7c2b2f5ed9f2cb0e31c9a36e10  Compilation complete - no errors found.  31 lines.
+base_tests/T_OPT   9831e099ddf1e1d84f22a12fcd0ee4e6  Compilation complete - no errors found.  36 lines.
+base_tests/T_U2    8c10fb7a47262e02a769b515a603d4c7  Compilation complete - no errors found.  26 lines.
+base_tests/T_U1    485cbec6959e2288f74a2a73af14df84  Compilation complete - no errors found.  47 lines.
+base_tests/T_UM    562f1586230f4189a56f87852f577037  Compilation complete - no errors found.  45 lines.
+base_tests/T_CLSU  1a86b1cd469455c9d0b03dfb7112c216  Compilation complete - no errors found.  73 lines.
+base_tests/T_CLSM  1355e9434f39a5ec634aded922b1017e  Compilation complete - no errors found.  47 lines.
+base_tests/T_ERRS  no-I-file  Compilation complete - 6 errors found.  20 lines.

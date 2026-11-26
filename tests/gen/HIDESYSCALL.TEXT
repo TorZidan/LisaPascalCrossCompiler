@@ -1,0 +1,40 @@
+{*------------------------------------------------------------------*}
+{                                                                    }
+{    HideSysCall - a unit to hide SysCall from the code generator    }
+{                                                                    }
+{ We can't include SysCall directly in the code generator because of }
+{ name conflicts.                                                    }
+{                                                                    }
+{*------------------------------------------------------------------*}
+
+{$I flags.text }
+{$e err.log}
+{$r-}
+
+UNIT HideSysCall;
+
+  INTERFACE
+
+    USES
+      {$U SysCall       } SysCall,    {to support PaslibCall        }
+      {$U PaslibCall.obj} PaslibCall; {for plInitHeap and pAbortFlag}
+
+    PROCEDURE XplInitHeap(VAR ErrNum, RefNum: Integer; Size, Delta: LongInt;
+                          LDSN: Integer; Swapable: Boolean);
+
+    FUNCTION XpAbortFlag: Boolean;
+
+  IMPLEMENTATION
+
+    PROCEDURE XPlinitheap;
+
+      BEGIN {XPlinitheap}
+        plInitHeap(ErrNum, RefNum, Size, Delta, LDSN, Swapable)
+      END; {XPlinitheap}
+
+   FUNCTION XpAbortFlag{: Boolean};
+
+     BEGIN {XpAbortFlag}
+       XpAbortFlag := pAbortFlag;
+     END; {XpAbortFlag}
+END.

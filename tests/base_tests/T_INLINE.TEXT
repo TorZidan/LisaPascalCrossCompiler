@@ -1,0 +1,31 @@
+{ SPDX-License-Identifier: GPL-3.0-or-later }
+{ INLINE machine-code words and multi-segment code generation. }
+program TInline;
+
+var
+  gMark: Integer;
+
+procedure CpuNop;
+  inline $4E71;
+
+procedure TwoNops;
+  inline $4E71, $4E71;
+
+{$S SegAlpha}
+function AlphaCalc(x: Integer): Integer;
+begin
+  CpuNop;
+  AlphaCalc := x + 10;
+end;
+
+{$S SegBeta}
+function BetaCalc(y: Integer): Integer;
+begin
+  TwoNops;
+  BetaCalc := AlphaCalc(y) * 2;
+end;
+
+{$S }
+begin
+  gMark := BetaCalc(15);
+end.

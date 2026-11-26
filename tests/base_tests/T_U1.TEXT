@@ -1,0 +1,33 @@
+{ SPDX-License-Identifier: GPL-3.0-or-later }
+{ Intermediate unit importing TU2 and running its own initialization block. }
+unit TU1;
+
+interface
+
+uses
+  {$U T_U2} TU2;
+
+var
+  gReadyU1: Boolean;
+  gInitU1: CountVal;
+
+function ReadU1: CountVal;
+
+procedure InitU1;
+
+implementation
+
+procedure InitU1;
+begin
+  gInitU1 := StepU2(8);
+  gReadyU1 := True;
+end;
+
+function ReadU1: CountVal;
+begin
+  if not gReadyU1 then
+    InitU1;
+  ReadU1 := gInitU1 + StepU2(2);
+end;
+
+end.

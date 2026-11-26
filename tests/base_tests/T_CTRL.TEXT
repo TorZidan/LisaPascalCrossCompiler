@@ -1,0 +1,49 @@
+{ SPDX-License-Identifier: GPL-3.0-or-later }
+{ Structured control flow: CASE/OTHERWISE, IF, WHILE, REPEAT, FOR, and GOTO. }
+program TCtrl;
+
+label
+  100;
+
+type
+  OpMode = (mIdle, mRun, mPause, mStop);
+
+var
+  gAcc: Integer;
+  gMode: OpMode;
+
+function StepMode(cur: OpMode; code: Integer): Integer;
+var
+  i, total: Integer;
+begin
+  total := 0;
+  case cur of
+    mIdle:  total := 1;
+    mRun:   for i := 1 to 6 do total := total + i;
+    mPause: for i := 5 downto 1 do total := total + i * 2;
+    mStop:  total := -1;
+  end;
+  case code of
+    10, 20: total := total + 100;
+    500:    total := total + 500;
+    otherwise total := total + 7;
+  end;
+  StepMode := total;
+end;
+
+begin
+  gAcc := 0;
+  gMode := mIdle;
+  while gMode <> mStop do
+    begin
+      gAcc := gAcc + StepMode(gMode, gAcc);
+      if gAcc > 200 then
+        goto 100
+      else
+        gMode := Succ(gMode);
+    end;
+  repeat
+    gAcc := gAcc + 1;
+  until gAcc >= 10;
+100:
+end.

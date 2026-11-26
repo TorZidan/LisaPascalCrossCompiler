@@ -1,0 +1,6 @@
+{$SETC ForOs := true}
+{$SETC NewLibs := false}               {Stable and Extensible, one paslib, SUlib,
+                                        etc.}
+{$SETC ForMake := false}
+{$SETC Legitimate := true}
+{$u+}

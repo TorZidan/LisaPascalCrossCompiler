@@ -1,0 +1,26 @@
+{ SPDX-License-Identifier: GPL-3.0-or-later }
+{ Clascal client program exercising object creation, dispatch, and typecasts. }
+{$U-}
+program TClsMain;
+
+uses
+  {$U T_CLSU} {$CLASSES+} TClsU;
+
+var
+  gAny: TShape;
+  gBox: TBoxShp;
+  gArea: LongInt;
+  gIsBox: Boolean;
+
+begin
+  gBox := nil;
+  gBox := TBoxShp.Create(10, 20, 6, 8);
+  gBox.GrowBox(2);
+  gAny := gBox;
+  gAny.ShiftBy(3, 4);
+  gArea := gAny.AreaVal;
+  gIsBox := InClass(gAny, TBoxShp);
+  if gIsBox then
+    with TBoxShp(gAny) do
+      gArea := gArea + fPosX + fPosY;
+end.

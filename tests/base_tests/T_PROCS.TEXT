@@ -1,0 +1,68 @@
+{ SPDX-License-Identifier: GPL-3.0-or-later }
+{ Nested lexical scopes, static links, VAR params, FORWARD, procedural params. }
+program TProcs;
+
+type
+  IntPtr = ^Integer;
+
+var
+  gTotal: LongInt;
+  gCell: Integer;
+  gPtr: IntPtr;
+
+function FibStep(n: Integer): Integer; forward;
+
+procedure ApplyTwice(
+  procedure Worker(var acc: LongInt; delta: Integer);
+  var target: LongInt;
+  step: Integer
+);
+begin
+  Worker(target, step);
+  Worker(target, step * 2);
+end;
+
+procedure AddScaled(var acc: LongInt; delta: Integer);
+begin
+  acc := acc + delta * 3;
+end;
+
+procedure OuterFrame(seed: Integer; var outSum: LongInt);
+var
+  outerLocal: Integer;
+
+  procedure MidFrame(mult: Integer);
+  var
+    midLocal: LongInt;
+
+    procedure InnerLeaf(extra: Integer);
+    begin
+      midLocal := midLocal + outerLocal * mult + seed + extra;
+    end;
+
+  begin
+    midLocal := 0;
+    InnerLeaf(5);
+    outSum := outSum + midLocal;
+  end;
+
+begin
+  outerLocal := seed + 2;
+  MidFrame(4);
+end;
+
+function FibStep;
+begin
+  if n <= 1 then
+    FibStep := n
+  else
+    FibStep := FibStep(n - 1) + FibStep(n - 2);
+end;
+
+begin
+  gTotal := 0;
+  OuterFrame(6, gTotal);
+  ApplyTwice(AddScaled, gTotal, FibStep(5));
+  gCell := 99;
+  gPtr := @gCell;
+end.

@@ -1,0 +1,20 @@
+{ SPDX-License-Identifier: GPL-3.0-or-later }
+{ Intentional syntax and semantic errors to verify error reporting & exit. }
+{$E err.log.text}
+program TErrs;
+
+type
+  BadPtr = ^MissingType;
+
+var
+  xVal: Integer;
+  flagVal: Boolean;
+
+procedure NeverDefined; forward;
+
+begin
+  xVal := undeclaredVar + 1;
+  flagVal := xVal;
+  xVal := 2 + * 3;
+  goto 99;
+end.

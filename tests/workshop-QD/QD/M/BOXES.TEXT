@@ -1,0 +1,19 @@
+$EXEC
+P{pascal}QD/BOXES
+
+
+G{generate}QD/BOXES
+
+L{link}QD/BOXES
+IOSPASLIB
+IOSFPLIB
+<QD/QDSTUFF
+
+QD/XBOXES
+S{sys-mgr}V{validate}Y{validate file xfers}N{don't validate selections}Q{quit}
+F{file-mgr}D{delete}QD/BOXES.I
+D{delete}QD/BOXES.OBJ
+R{rename}QD/XBOXES.OBJ,QD/BOXES.OBJ
+Q{quit}
+R{run}QD/BOXES
+$ENDEXEC

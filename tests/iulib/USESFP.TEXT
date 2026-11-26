@@ -1,0 +1,7 @@
+PROGRAM UsesFP;
+  USES FPLib, MathLib;
+  VAR x: Real;
+  BEGIN
+    x := 2.0;
+    WriteLn(x);
+  END.

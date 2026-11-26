@@ -1,0 +1,8 @@
+PROGRAM UsesQD;
+  USES QuickDraw;
+  VAR r: Rect; p: Point;
+  BEGIN
+    SetRect(r, 10, 20, 30, 40);
+    SetPt(p, 1, 2);
+    IF PtInRect(p, r) THEN WriteLn('in');
+  END.

@@ -1,0 +1,51 @@
+BUILD=3.0  WORKSHOP=2.0  boot volume: libs/workshop2.0
+base_tests/T_ARITH       built  1024 bytes
+base_tests/T_CTRL        built   512 bytes
+base_tests/T_TYPES       built  1024 bytes
+base_tests/T_PROCS       built  1536 bytes
+base_tests/T_INLINE      built   512 bytes
+base_tests/T_OPT         built   512 bytes
+base_tests/T_U2          built  1536 bytes
+base_tests/T_U1          built  1536 bytes
+base_tests/T_UM          built   512 bytes
+base_tests/T_CLSU        built  2560 bytes
+base_tests/T_CLSM        built  1024 bytes
+Gen/HIDESYSCALL          identical to Lisa .OBJ (1536 bytes)
+iulib/USESTD             FAILED (see iulib/USESTD.*.log)
+iulib/USESQD             FAILED (see iulib/USESQD.*.log)
+iulib/USESFP             built   512 bytes (USES via INTRINSIC.LIB)
+QD/QDSAMPLE              4 identical, 1 not found (procedures vs Workshop 1.0 linked .OBJ)
+                           INITICON  2844 bytes NOT FOUND: closest at segment 0 offset $0130, 1082 bytes differ
+QD/QDSAMPLE              4 identical, 1 not found (procedures vs Workshop 2.0 linked .OBJ)
+                           INITICON  2844 bytes NOT FOUND: closest at segment 0 offset $0130, 1082 bytes differ
+QD/BOXES                 5 identical, 0 not found (procedures vs Workshop 1.0 linked .OBJ)
+QD/BOXES                 5 identical, 0 not found (procedures vs Workshop 2.0 linked .OBJ)
+1 identical, 2 failed or different
+4576143e0e961b1c7d1f854b6542e36e  base_tests/T_ARITH.OBJ
+40f9a338a123ab4a4133adf71cc4e50e  base_tests/T_CLSM.OBJ
+c007230c758c9d189d8c168dc82dba36  base_tests/T_CLSU.OBJ
+c6f7c491ee14539b5d05ae0a2fc4f00a  base_tests/T_CTRL.OBJ
+891653dc9c7a994712f0de15337a8db4  base_tests/T_INLINE.OBJ
+02f568510f9585ca59bf1013cf52f1e5  base_tests/T_OPT.OBJ
+04dbc1a1d61ca28785ac9c2bb4804ac9  base_tests/T_PROCS.OBJ
+61dad767e48e06af7236fae72e012115  base_tests/T_TYPES.OBJ
+f64e7c47042a4a7d633fcc92c5a2d4eb  base_tests/T_U1.OBJ
+ad28a80c2c3ce86670a974783f4fbe8d  base_tests/T_U2.OBJ
+d3337330dfa7ff76ef8cdba02d0ec942  base_tests/T_UM.OBJ
+16822731a594b5d1435afdd76a4a1985  gen/HIDESYSCALL.OBJ
+ed9c31287eaca0638abd2b1155662505  iulib/USESFP.OBJ
+0e8862db5bf9fc40253885f0f5e22ad8  qd/QD/BOXES.OBJ
+16424c92cb1d3d2e1d28efd6a2f34e96  qd/QD/FM68K.obj
+528d2ad371936ca1bfe4b4786a4e982f  qd/QD/FONTMGR.obj
+d95188c4293f15e50ca5119a9925ad1b  qd/QD/GRAF3D.obj
+84ba3d30a84c90bc8d9e51ac6e7c4315  qd/QD/GRAFLIB.obj
+8d0cdc7cd61143d697701506195d38c3  qd/QD/GRAFUTIL.obj
+99563ccb1d72444d21f4144ec0c457c0  qd/QD/HARDWARE.obj
+636f7a864f64753794f0d675aef30f09  qd/QD/HWINTL.obj
+f579981c0b950e73ae9331e091c3d74e  qd/QD/QDSAMPLE.OBJ
+1a861633faafff2e9cb7b7b66b1e155e  qd/QD/QDSUPPORT.obj
+1f04e23119309a73db503484a127dce1  qd/QD/QUICKDRAW.obj
+cef87d7c2a383d3877f4ade8070f32a4  qd/QD/STORAGE.obj
+90581c8a4f5684c8a39a6f0563335641  qd/QD/UNIT68K.obj
+c8112b771968ac4b9d3a455e66aa33d1  qd/QD/UNITHZ.obj
+9292c0d1f67b05e4e21ffb7053619c3f  qd/QD/UNITSTD.obj

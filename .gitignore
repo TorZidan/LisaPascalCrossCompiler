@@ -1,0 +1,14 @@
+
+# Python's caches
+__pycache__/
+
+# Old code, do not use
+old-do-not-commit/
+
+# Intermediate I-code and error logs if compiler is run manually inside tests/
+tests/**/*.I
+tests/**/err.log.text
+
+# How I run LisaEm in this folder: ~/github/lisaem-fork3/bin/lisaem  -c ./lisaem.conf  -p
+lisaem.conf
+tests/LOSandWorkshop3.0_WithCompiledLisaSources_DO_NOT_COMMIT.image

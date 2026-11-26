@@ -1,0 +1,26 @@
+{ SPDX-License-Identifier: GPL-3.0-or-later }
+{ Leaf unit for multi-unit USES and initialization-order testing. }
+unit TU2;
+
+interface
+
+const
+  kSeedU2 = 40;
+
+type
+  CountVal = LongInt;
+
+var
+  gCountU2: CountVal;
+
+function StepU2(delta: Integer): CountVal;
+
+implementation
+
+function StepU2(delta: Integer): CountVal;
+begin
+  gCountU2 := gCountU2 + kSeedU2 + delta;
+  StepU2 := gCountU2;
+end;
+
+end.

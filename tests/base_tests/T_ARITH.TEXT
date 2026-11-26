@@ -1,0 +1,33 @@
+{ SPDX-License-Identifier: GPL-3.0-or-later }
+{ Integer and LongInt arithmetic, hex constants, subranges, and comparisons. }
+program TArith;
+
+const
+  kBias16 = 17;
+  kMaxWord = $7FFF;
+  kUnit32 = $00010000;
+
+type
+  SmallSpan = -50..50;
+
+var
+  gSum32: LongInt;
+  gRem16: Integer;
+  gSpan: SmallSpan;
+  gValid: Boolean;
+
+function CalcSpan(vIn: Integer; scaleBy: LongInt): LongInt;
+var
+  prod, quot: LongInt;
+begin
+  prod := (vIn + kBias16) * scaleBy;
+  quot := prod div 3;
+  CalcSpan := quot - (prod mod 3) + Abs(vIn) + Sqr(vIn mod 7);
+end;
+
+begin
+  gSpan := -12;
+  gSum32 := CalcSpan(gSpan, kUnit32 div 64);
+  gRem16 := kMaxWord mod 97;
+  gValid := (gSum32 > 0) and (gRem16 >= 0) and not (gSpan > 0);
+end.

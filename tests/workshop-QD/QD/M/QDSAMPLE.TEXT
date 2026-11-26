@@ -1,0 +1,18 @@
+$EXEC
+P{pascal}QD/QDSAMPLE
+
+
+G{generate}QD/QDSAMPLE
+
+L{link}QD/QDSAMPLE
+IOSPASLIB
+<QD/QDSTUFF
+
+QD/XQDSAMPLE
+S{sys-mgr}V{validate}Y{validate file xfers}N{don't validate selections}Q{quit}
+F{file-mgr}D{delete}QD/QDSAMPLE.I
+D{delete}QD/QDSAMPLE.OBJ
+R{rename}QD/XQDSAMPLE.OBJ,QD/QDSAMPLE.OBJ
+Q{quit}
+R{run}QD/QDSAMPLE
+$ENDEXEC

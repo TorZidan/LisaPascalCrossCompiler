@@ -1,0 +1,73 @@
+{ SPDX-License-Identifier: GPL-3.0-or-later }
+{ Clascal unit testing SUBCLASS, ABSTRACT, OVERRIDE, SELF, and INCLASS. }
+{$U-}
+unit TClsU;
+
+interface {$CLASSES+}
+
+type
+  TShape = subclass of nil
+    fPosX, fPosY: Integer;
+    function TShape.Create(ax, ay: Integer): TShape;
+    procedure ShiftBy(dx, dy: Integer);
+    function AreaVal: LongInt; abstract;
+  end;
+
+  TBoxShp = subclass of TShape
+    fWidth, fHeight: Integer;
+    function TBoxShp.Create(ax, ay, aw, ah: Integer): TBoxShp;
+    function AreaVal: LongInt; override;
+    procedure GrowBox(step: Integer);
+  end;
+
+var
+  gShapeInited: Integer;
+
+implementation
+
+methods of TShape;
+
+  function TShape.Create(ax, ay: Integer): TShape;
+  begin
+    Self.fPosX := ax;
+    Self.fPosY := ay;
+    Create := Self;
+  end;
+
+  procedure ShiftBy(dx, dy: Integer);
+  begin
+    Self.fPosX := Self.fPosX + dx;
+    Self.fPosY := Self.fPosY + dy;
+  end;
+
+  begin
+    gShapeInited := 1;
+  end;
+
+methods of TBoxShp;
+
+  function TBoxShp.Create(ax, ay, aw, ah: Integer): TBoxShp;
+  begin
+    Self := TBoxShp(TShape.Create(ax, ay));
+    Self.fWidth := aw;
+    Self.fHeight := ah;
+    Create := Self;
+  end;
+
+  function AreaVal: LongInt;
+  begin
+    AreaVal := LongInt(Self.fWidth) * Self.fHeight;
+  end;
+
+  procedure GrowBox(step: Integer);
+  begin
+    Self.ShiftBy(-step, -step);
+    Self.fWidth := Self.fWidth + step * 2;
+    Self.fHeight := Self.fHeight + step * 2;
+  end;
+
+  begin
+    gShapeInited := gShapeInited + 1;
+  end;
+
+end.

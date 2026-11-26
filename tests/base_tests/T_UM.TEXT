@@ -1,0 +1,17 @@
+{ SPDX-License-Identifier: GPL-3.0-or-later }
+{ Main program importing TU2 and TU1 to exercise unit interfaces and init. }
+program TUnitMain;
+
+uses
+  {$U T_U2} TU2,
+  {$U T_U1} TU1;
+
+var
+  gResult: CountVal;
+
+begin
+  if gReadyU1 then
+    gResult := ReadU1 + StepU2(5)
+  else
+    gResult := 0;
+end.

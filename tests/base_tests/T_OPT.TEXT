@@ -1,0 +1,36 @@
+{ SPDX-License-Identifier: GPL-3.0-or-later }
+{ Constant folding, sizeof, strength reduction, and range-flag switching. }
+program TOpt;
+
+const
+  kBase = 64;
+  kHalf = kBase div 2;
+  kMask = kBase - 1;
+  kIsOdd = Odd(kHalf + 1);
+  kChA = Chr(Ord('A') + 2);
+
+type
+  PairRec = record
+    leftVal, rightVal: LongInt;
+  end;
+
+const
+  kPairBytes = SizeOf(PairRec);
+
+var
+  gTable: array[0..15] of LongInt;
+  gIdx: Integer;
+  gRes: LongInt;
+
+begin
+  for gIdx := 0 to 15 do
+    gTable[gIdx] := (gIdx * 8) + (gIdx div 4) + kPairBytes;
+
+  {$R-}
+  gIdx := (Ord(kChA) + kMask) mod 14;
+  if kIsOdd then
+    gRes := gTable[gIdx + 1] + gTable[gIdx + 1] * 2
+  else
+    gRes := 0;
+  {$R+}
+end.
