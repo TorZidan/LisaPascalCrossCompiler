@@ -151,6 +151,10 @@ script with the 2.0 build). Across the full Lisa Office System source build
 (`tests/run_lisa_sources_build_tests.sh`), 3 units (`NEWFPLIB`, `MATHLIB`,
 `UTEXT`) depend on the 3.0 boolean-register change in `LoadAOrd`.
 
+## Sample build scripts
+
+You can easily automate all steps in this build process using linux shell scripts. See examples [here](https://github.com/TorZidan/LisaSerialFtp/blob/main/src/client/make.sh) and [here](https://github.com/TorZidan/LisaOfficeSystemTextEditor).
+
 ## Getting the built files to your Lisa
 
 Once you have cross-compiled and linked a Workshop program (`MYPROG.OBJ`) or an
