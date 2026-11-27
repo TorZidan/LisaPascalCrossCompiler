@@ -81,7 +81,9 @@ An empty answer takes the default and end of input (Ctrl-D) acts as ESC.
 like the Workshop's `L(ink)` command, with `linker/lisalinker.py` (see
 [`linker/README.md`](linker/README.md)). The linked program replaces the `.OBJ`,
 as the Workshop's own exec files do (they link to `XNAME` and rename it to
-`NAME.OBJ`):
+`NAME.OBJ`). `--link` compiles the source (`MYPROG` below is `MYPROG.TEXT`) and
+then links it; to link existing `.OBJ` files, run `linker/lisalinker.py`
+directly (see below):
 
 ```sh
 pascal/lpc.py --link MYPROG                       # with IOSPASLIB

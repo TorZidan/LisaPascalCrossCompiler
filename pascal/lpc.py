@@ -62,6 +62,20 @@ def main(argv: list[str] | None = None) -> int:
         print('lpc.py: --pack needs --link')
         return 2
 
+    # The first argument that is not a $ option answers "Input file": it must
+    # be a Pascal source. An .OBJ there is a common mistake (trying to link
+    # an already compiled program), so say what to run instead.
+    source = next((a for a in args if not a.startswith('$')), '')
+    if source.upper().endswith('.OBJ'):
+        stem = source[:-len('.OBJ')]
+        libs = (link or 'IOSPASLIB').replace(',', ' ')
+        print(f'lpc.py: {source} is an object file, but lpc.py compiles Pascal source.')
+        print('To compile the source and link it in one step:')
+        print(f'  python3 {sys.argv[0]} --link={(link or "IOSPASLIB")} {stem}')
+        print(f'To link an already compiled {source}, run the linker directly:')
+        print(f'  python3 {os.path.relpath(os.path.join(ROOT, "linker", "lisalinker.py"))} -o {stem}.OUT {source} {libs}')
+        return 2
+
     if args:
         has_g = any(a[:2].upper() == '$G' for a in args)
         if not has_g:
