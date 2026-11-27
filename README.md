@@ -165,7 +165,7 @@ are two main ways to get the built files onto your Lisa.
 
 Both approaches work in the **[LisaEm](https://github.com/arcanebyte/lisaem)** emulator
 and on a **real Apple Lisa** using a ProFile hard-disk hardware emulator such as
-**ESProfile** (whose hard-disk image files live on a microSD / SD card) or a
+**ESProfile** (whose hard-disk image files live on a microSD card) or a
 floppy hardware emulator such as **FloppyEmu** or **ESFloppy**.
 
 ### Option 1: Write directly to a disk image (use `file-system-tools/` and `installtool/`)
@@ -301,7 +301,6 @@ reference `.obj` comparisons:
 | [`file-system-tools/`](file-system-tools/README.md) | `LisaFileSystemTool.py` and `LisaFileSystemToolPerFile.py`: read and write files on Lisa DC42 and ProFile disk images |
 | `libs/workshop3.0/`, `libs/workshop2.0/`, `libs/workshop1.0/` | Workshop 3.0, 2.0, and 1.0 boot-volume libraries (`INTRINSIC.LIB`, intrinsic `.obj` libraries, `SYSCALL.obj`, `PASLIBCALL.obj`, `SYSTEM.UNPACK`, and API reference `.md` docs) |
 | `tools/objdump.py` | Dumps the blocks of a Lisa `.OBJ` file |
-| `tools/lisafiles.py` | Reassembles files of a `.dc42` disk image from block tags (`lisafiles.py IMAGE` lists them, `lisafiles.py IMAGE ID` prints one as text) |
 | `tools/cmplinked.py` | Finds each procedure of a compiled `.OBJ` in a Lisa-linked program |
 | `docs/` | Apple Lisa manuals used as references |
 | `tests/` | Test suites, downloaded-app harnesses, scripts, and baselines |
