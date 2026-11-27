@@ -39,11 +39,11 @@ end accepts at its first prompt (`$G+`, `$ASM+`, `$ASM ONLY`, `$M+`, `$Efile`,
 listings). The prompts and answers are shown, as in a Workshop session:
 
 ```sh
-pascal/pascal.py '$G-' MYPROG                     # -> MYPROG.I
-pascal/pascal.py '$G-' '$ASM+' MYPROG MYPROG.LST  # options, input file, list file
+pascal/pascal.py '$G-' MYPROG                     # MYPROG.TEXT -> MYPROG.I
+pascal/pascal.py '$G-' '$ASM+' MYPROG MYPROG.LST  # options, input file, listing file
 pascal/code.py MYPROG                             # MYPROG.I -> MYPROG.OBJ
-pascal/lpc.py MYPROG '' OTHER                     # no listing, output OTHER.OBJ
-pascal/lpc.py --2.0 MYPROG                        # the same with the 2.0 build
+pascal/lpc.py --2.0 MYPROG                        # Like above, but for Workshop 2.0
+pascal/lpc.py MYPROG '' OTHER                     # MYPROG.TEXT -> OTHER.OBJ, no listing file
 ```
 
 `pascal/lpc.py` passes its arguments to the front end and puts `$G+` first
