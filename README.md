@@ -7,8 +7,8 @@ generator, the tool-install utility, and the icon and disk-image utilities. All
 of them are written in Python 3 (standard library only) and produce outputs
 identical, byte for byte, to those written by the Lisa Workshop.
 
-The compiler ([`pascal/`](pascal/README.md)) is a translation of the Lisa
-sources of the Workshop compiler. It has two passes:
+The compiler ([`pascal/`](pascal/README.md)) is 1:1 translation of the  pascal
+compiler `pascal.obj` in Workshop. It has two passes:
 
 | Pass | Role | Program |
 |---|---|---|
@@ -20,8 +20,9 @@ sources of the Workshop compiler. It has two passes:
 
 ## Run
 
-Nothing needs to be built. Compile with both passes, the way the Workshop does
-with option `$G+`:
+Nothing needs to be built. The typical use is to run both passes
+(`.TEXT` -> `.I` and then  `.I` -> `.OBJ`) in one command, the way it works
+in Workshop (which is triggered by the default option `$G+`):
 
 ```sh
 pascal/lpc.py MYPROG                              # MYPROG.TEXT -> MYPROG.OBJ
