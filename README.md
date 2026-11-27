@@ -77,23 +77,35 @@ An empty answer takes the default and end of input (Ctrl-D) acts as ESC.
 
 ### Linking
 
-`pascal/lpc.py --link` links the compiled program after the code generator,
+`pascal/lpc.py --link` compiles and then links the compiled program,
 like the Workshop's `L(ink)` command, with `linker/lisalinker.py` (see
 [`linker/README.md`](linker/README.md)). The linked program replaces the `.OBJ`,
 as the Workshop's own exec files do (they link to `XNAME` and rename it to
 `NAME.OBJ`). `--link` compiles the source (`MYPROG` below is `MYPROG.TEXT`) and
-then links it; to link existing `.OBJ` files, run `linker/lisalinker.py`
+then links it; to link existing compiled `.OBJ` files, run `linker/lisalinker.py`
 directly (see below):
 
 ```sh
-pascal/lpc.py --link MYPROG                       # with IOSPASLIB
+# Compile and link MYPROG.TEXT in 1 step, with IOSPASLIB
+pascal/lpc.py --link MYPROG
+
+# Compile and link MYPROG.TEXT in 1 step, with IOSPASLIB, SYS1LIB, SYS2LIB, PRLIB
 pascal/lpc.py --link=IOSPASLIB,SYS1LIB,SYS2LIB,PRLIB MYPROG
+
+# Compile and link QD/BOXES.TEXT in 1 step, with IOSPASLIB, IOSFPLIB
+# and the libraries listed in QD/QDSTUFF.TEXT (note the '<' there)
 pascal/lpc.py --link='IOSPASLIB,IOSFPLIB,<QD/QDSTUFF' QD/BOXES
-pascal/lpc.py --link --pack MYPROG                # also pack the code
+
+# Compile and link MYPROG.TEXT in 1 step, with IOSPASLIB, and also pack the code
+pascal/lpc.py --link --pack MYPROG
+
+# Just link an already compiled MYPROG.OBJ with IOSPASLIB, into XMYPROG.OBJ
+linker/lisalinker.py -o XMYPROG MYPROG IOSPASLIB
 ```
 
-* The list names the files to link after the program, in order, the way the
-  Workshop's Linker takes them:
+* The libraries named after `--link=` (comma-separated), or after the program
+  on the `lisalinker.py` command line, are linked after the program, in order,
+  the way the Workshop's Linker takes them:
   * `.OBJ` is added when needed, and case is ignored.
   * A name that is not in the current directory is looked up in the boot folder
     (`$LISA_BOOT`, the same one the compiler uses; see
