@@ -153,7 +153,9 @@ script with the 2.0 build). Across the full Lisa Office System source build
 
 ## Sample build scripts
 
-You can easily automate all steps in this build process using linux shell scripts. See examples [here](https://github.com/TorZidan/LisaSerialFtp/blob/main/src/client/make.sh) and [here](https://github.com/TorZidan/LisaOfficeSystemTextEditor).
+You can easily automate all steps of the build process using linux shell scripts. 
+See examples [here](https://github.com/TorZidan/LisaSerialFtp/blob/main/src/client/make.sh)
+and [here](https://github.com/TorZidan/LisaOfficeSystemTextEditor/blob/main/make.sh).
 
 ## Getting the built files to your Lisa
 
